@@ -17,3 +17,6 @@
 
 ## Ajankäyttö:
   Tarpeen mukaan, sillain että tulee valmista. (Sovitaan viikoittaisissa palavereissa)
+
+###### GitProfiilit: 
+  Kasper: ```https://github.com/Kasparist´´´
