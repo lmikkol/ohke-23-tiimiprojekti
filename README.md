@@ -1,6 +1,6 @@
 # ohke-23-tiimiprojekti
 
-ReadMe:sta löytyy seuraavat asiat: työkalut, roolit, ajankäyttö (dailyt, avun saanti, yhteistyö), kommunikaatiokanava. 
+
 
 Roolit: 
   Scrum master: Mikko
