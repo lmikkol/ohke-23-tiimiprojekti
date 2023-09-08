@@ -2,9 +2,11 @@
 
 
 
-## Roolit: 
+# Roolit: 
   Scrum master: Mikko
+  
   Product owner: Jani, Kasper
+  
   Developers: Mikko, Kasper, Valentin, Jani
 
 ### Työkalut:
