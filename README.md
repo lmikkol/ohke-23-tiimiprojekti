@@ -2,16 +2,16 @@
 
 
 
-#Roolit: 
+## Roolit: 
   Scrum master: Mikko
   Product owner: Jani, Kasper
   Developers: Mikko, Kasper, Valentin, Jani
 
-##Työkalut:
+### Työkalut:
   Discord, Unity, Razor pages, VSC, ei ole päätetty kaikkea.
 
-###Kommunikaatiokanavat:
+#### Kommunikaatiokanavat:
   Discord, Teams, sähköposti
 
-####Ajankäyttö:
+##### Ajankäyttö:
   Tarpeen mukaan, sillain että tulee valmista.
