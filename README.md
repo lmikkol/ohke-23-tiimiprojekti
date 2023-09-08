@@ -16,4 +16,4 @@
   Discord, Teams, sähköposti
 
 ##### Ajankäyttö:
-  Tarpeen mukaan, sillain että tulee valmista.
+  Tarpeen mukaan, sillain että tulee valmista. (Sovitaan viikoittaisissa palavereissa)
