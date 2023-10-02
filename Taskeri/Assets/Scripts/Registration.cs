@@ -38,11 +38,35 @@ public class Registration : MonoBehaviour
   }
   public void RegisterUser()
   {
-    string passwordHash = HashingPassword(passwordField.text);
-    Debug.Log("Hello " + nameField.text + " " + passwordHash + " " + passwordAgainField.text);
-    errorMessenger.ShowNotification("User already exists.");
-    // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex -1);
+    if(CheckMatchingPasswords(passwordField.text, passwordAgainField.text ))
+    {
+      errorMessenger.ShowNotification("SAMAT");
+      string passwordHash = HashingPassword(passwordField.text);
+      int id = userData.AddUser(nameField.text, passwordHash);
+      if(id>0)
+      {
+        Debug.Log("Hello " + nameField.text + " " + passwordHash + " " + passwordAgainField.text);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex -1);
+      }
+      else
+      {
+        errorMessenger.ShowNotification("käyttis käytössä");
+      }
+       
+       
+      //  errorMessenger.ShowNotification("User already exists.");
+    }
+    else
+    {
+      errorMessenger.ShowNotification("Passwords do not match");
+    }
+    
+    // 
+  }
 
+  public bool CheckMatchingPasswords(string password, string passwordAgain)
+  {
+    return password.Equals(passwordAgain);
   }
 
   public string HashingPassword(string password)
