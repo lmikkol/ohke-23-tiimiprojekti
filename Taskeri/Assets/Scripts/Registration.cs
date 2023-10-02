@@ -17,8 +17,10 @@ public class Registration : MonoBehaviour
   public Button backButton;
   #endregion
 
+  ErrorNotificator errorMessenger;
   private void Awake()
   {
+    errorMessenger = GetComponent<ErrorNotificator>();
     submitButton.interactable = false;
   }
 
@@ -37,7 +39,8 @@ public class Registration : MonoBehaviour
   {
 
     Debug.Log("Hello " + nameField.text + " " + passwordField.text + " " + passwordAgainField.text);
-    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex -1);
+    errorMessenger.ShowNotification("Fuck you Kyle");
+    // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex -1);
 
   }
 
