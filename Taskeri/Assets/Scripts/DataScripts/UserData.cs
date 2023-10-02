@@ -65,7 +65,7 @@ public class UserData : MonoBehaviour
         }
     }
 
-    public void AddUser()
+    public void AddUser(string user, string hashPassword)
     {
         using(var connection = new SqliteConnection(dbName))
         {
@@ -76,7 +76,7 @@ public class UserData : MonoBehaviour
                 
                try
                {
-                 command.CommandText = "INSERT INTO User(username, password) VALUES ('" + userName.text + "', '" + passWord.text + "');";
+                command.CommandText = "INSERT INTO User(username, password) VALUES ('" + user + "', '" + hashPassword + "');";
                 command.ExecuteNonQuery();
               
                }
