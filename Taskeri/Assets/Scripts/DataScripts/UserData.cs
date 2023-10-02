@@ -90,7 +90,6 @@ public class UserData : MonoBehaviour
                
                 // if (se.ResultCode != SQLiteErrorCode.Constraint_Unique)
             }
-
             connection.Close();
         }
         DisplayUserData();

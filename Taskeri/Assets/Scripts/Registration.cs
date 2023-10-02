@@ -1,4 +1,5 @@
 using BCrypt.Net;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -38,9 +39,13 @@ public class Registration : MonoBehaviour
   }
   public void RegisterUser()
   {
-    if(CheckMatchingPasswords(passwordField.text, passwordAgainField.text ))
+    // UNCOMMENT LATER!!!!
+    //if(CheckMatchingPasswords(passwordField.text, passwordAgainField.text) && PasswordRegularExpression(passwordField.text))
+    if(CheckMatchingPasswords(passwordField.text, passwordAgainField.text))
     {
-      errorMessenger.ShowNotification("SAMAT");
+      
+      
+      
       string passwordHash = HashingPassword(passwordField.text);
       int id = userData.AddUser(nameField.text, passwordHash);
       if(id>0)
@@ -50,15 +55,15 @@ public class Registration : MonoBehaviour
       }
       else
       {
-        errorMessenger.ShowNotification("käyttis käytössä");
+        errorMessenger.ShowNotification("User already exists.");
+        // errorMessenger.ShowNotification("käyttis käytössä");
       }
        
        
-      //  errorMessenger.ShowNotification("User already exists.");
     }
     else
     {
-      errorMessenger.ShowNotification("Passwords do not match");
+      errorMessenger.ShowNotification("Passwords do not match / password doesn't meet regulations.");
     }
     
     // 
@@ -66,6 +71,7 @@ public class Registration : MonoBehaviour
 
   public bool CheckMatchingPasswords(string password, string passwordAgain)
   {
+    Debug.Log(password.Equals(passwordAgain) +" match");
     return password.Equals(passwordAgain);
   }
 
@@ -74,6 +80,14 @@ public class Registration : MonoBehaviour
     //Hashing the password
     string passwordHash = BCrypt.Net.BCrypt.HashPassword(password);
     return passwordHash;
+  }
+
+  public bool PasswordRegularExpression(string password)
+  {
+    Regex passwordRegex = new Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{5,}$");
+        Debug.Log(passwordRegex.IsMatch(password) +" match regex");
+
+    return passwordRegex.IsMatch(password);
   }
 
 }
