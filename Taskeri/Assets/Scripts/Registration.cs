@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using BCrypt.Net;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -18,8 +17,10 @@ public class Registration : MonoBehaviour
   #endregion
 
   ErrorNotificator errorMessenger;
+  UserData userData;
   private void Awake()
   {
+    userData = GetComponent<UserData>();
     errorMessenger = GetComponent<ErrorNotificator>();
     submitButton.interactable = false;
   }
@@ -37,11 +38,18 @@ public class Registration : MonoBehaviour
   }
   public void RegisterUser()
   {
-
-    Debug.Log("Hello " + nameField.text + " " + passwordField.text + " " + passwordAgainField.text);
-    errorMessenger.ShowNotification("Fuck you Kyle");
+    string passwordHash = HashingPassword(passwordField.text);
+    Debug.Log("Hello " + nameField.text + " " + passwordHash + " " + passwordAgainField.text);
+    errorMessenger.ShowNotification("User already exists.");
     // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex -1);
 
+  }
+
+  public string HashingPassword(string password)
+  {
+    //Hashing the password
+    string passwordHash = BCrypt.Net.BCrypt.HashPassword(password);
+    return passwordHash;
   }
 
 }
