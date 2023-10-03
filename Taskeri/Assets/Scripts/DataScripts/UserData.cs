@@ -65,7 +65,7 @@ public class UserData : MonoBehaviour
         }
     }
 
-    public void AddUser(string user, string hashPassword)
+    public int AddUser(string user, string hashPassword)
     {
         using(var connection = new SqliteConnection(dbName))
         {
@@ -76,19 +76,20 @@ public class UserData : MonoBehaviour
                 
                try
                {
-                command.CommandText = "INSERT INTO User(username, password) VALUES ('" + user + "', '" + hashPassword + "');";
-                command.ExecuteNonQuery();
+                command.CommandText = "INSERT INTO User(username, password) VALUES ('" + user + "', '" + hashPassword + "'); SELECT last_insert_rowid()";
+                //command.ExecuteNonQuery();
+                int id = Convert.ToInt32(command.ExecuteScalar());
+                Debug.Log(id);
+                return id;
               
                }
                catch (Exception e)
                {
-                
-                throw e;
+                return -1;
                }
                
                 // if (se.ResultCode != SQLiteErrorCode.Constraint_Unique)
             }
-
             connection.Close();
         }
         DisplayUserData();

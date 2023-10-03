@@ -1,4 +1,5 @@
 using BCrypt.Net;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -38,11 +39,40 @@ public class Registration : MonoBehaviour
   }
   public void RegisterUser()
   {
-    string passwordHash = HashingPassword(passwordField.text);
-    Debug.Log("Hello " + nameField.text + " " + passwordHash + " " + passwordAgainField.text);
-    errorMessenger.ShowNotification("User already exists.");
-    // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex -1);
+    // UNCOMMENT LATER!!!!
+    //if(CheckMatchingPasswords(passwordField.text, passwordAgainField.text) && PasswordRegularExpression(passwordField.text))
+    if(CheckMatchingPasswords(passwordField.text, passwordAgainField.text))
+    {
+      
+      
+      
+      string passwordHash = HashingPassword(passwordField.text);
+      int id = userData.AddUser(nameField.text, passwordHash);
+      if(id>0)
+      {
+        Debug.Log("Hello " + nameField.text + " " + passwordHash + " " + passwordAgainField.text);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex -1);
+      }
+      else
+      {
+        errorMessenger.ShowNotification("User already exists.");
+        // errorMessenger.ShowNotification("käyttis käytössä");
+      }
+       
+       
+    }
+    else
+    {
+      errorMessenger.ShowNotification("Passwords do not match / password doesn't meet regulations.");
+    }
+    
+    // 
+  }
 
+  public bool CheckMatchingPasswords(string password, string passwordAgain)
+  {
+    Debug.Log(password.Equals(passwordAgain) +" match");
+    return password.Equals(passwordAgain);
   }
 
   public string HashingPassword(string password)
@@ -50,6 +80,14 @@ public class Registration : MonoBehaviour
     //Hashing the password
     string passwordHash = BCrypt.Net.BCrypt.HashPassword(password);
     return passwordHash;
+  }
+
+  public bool PasswordRegularExpression(string password)
+  {
+    Regex passwordRegex = new Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{5,}$");
+        Debug.Log(passwordRegex.IsMatch(password) +" match regex");
+
+    return passwordRegex.IsMatch(password);
   }
 
 }
