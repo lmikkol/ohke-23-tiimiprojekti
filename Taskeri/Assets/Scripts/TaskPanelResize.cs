@@ -61,8 +61,8 @@ public class TaskPanelResize : MonoBehaviour
         Vector2 newSize = initialPanelSize + new Vector2(offset.x, -offset.y);
 
         // Clamp the new size to ensure it doesn't become too small or negative.
-        newSize.x = Mathf.Max(newSize.x, 0f);
-        newSize.y = Mathf.Max(newSize.y, 0f);
+        newSize.x = Mathf.Max(newSize.x, 20f);
+        newSize.y = Mathf.Max(newSize.y, 20f);
 
         // Set the size of the parent task panel.
         panelRectTransform.sizeDelta = newSize;
