@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class TaskPanelResize : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class TaskPanelResize : MonoBehaviour
 
     private RectTransform resizeHandleRectTransform;
     private RectTransform panelRectTransform;
+
+    public RectTransform textObject;
 
 
 
@@ -60,12 +63,20 @@ public class TaskPanelResize : MonoBehaviour
         Vector3 offset = Input.mousePosition - initialMousePos;
         Vector2 newSize = initialPanelSize + new Vector2(offset.x, -offset.y);
 
+        float textObjectInset = 20f;
+
         // Clamp the new size to ensure it doesn't become too small or negative.
         newSize.x = Mathf.Max(newSize.x, 20f);
         newSize.y = Mathf.Max(newSize.y, 20f);
 
         // Set the size of the parent task panel.
         panelRectTransform.sizeDelta = newSize;
+
+        Vector2 textObjectSize = newSize - new Vector2(textObjectInset, textObjectInset);
+
+        // Update the size of the text object identically.
+        textObject.sizeDelta = textObjectSize; // Assuming textObject is a TextMeshProUGUI.
+
 
         // Set the position of the resizing handle to the lower-right corner of the panel.
         Vector3 handlePosition = new Vector3(panelRectTransform.sizeDelta.x, -panelRectTransform.sizeDelta.y, 0f);
