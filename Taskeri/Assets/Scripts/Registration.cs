@@ -39,7 +39,7 @@ public class Registration : MonoBehaviour
   {
 
     Debug.Log("Hello " + nameField.text + " " + passwordField.text + " " + passwordAgainField.text);
-    errorMessenger.ShowNotification("Fuck you Kyle");
+    errorMessenger.ShowNotification("Fuck you "+ nameField.text);
     // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex -1);
 
   }
