@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.Windows;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
 public class Registration : MonoBehaviour
 {
 #region InputFields
@@ -19,7 +24,8 @@ public class Registration : MonoBehaviour
 
   ErrorNotificator errorMessenger;
   UserData userData;
-  private void Awake()
+  Regex passwordRegex = new Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{5,}$");
+    private void Awake()
   {
     userData = GetComponent<UserData>();
     errorMessenger = GetComponent<ErrorNotificator>();
@@ -61,7 +67,8 @@ public class Registration : MonoBehaviour
         }
         if (!PasswordRegularExpression(passwordField.text))
         {
-            errorMessenger.ShowNotification("Password doesn't meet regulations.");
+            PasswordRequires(passwordField.text);
+            errorMessenger.ShowNotification("Password doesn't meet regulations. Missing the following: " + PasswordRequires(passwordField.text));
         }
 
     }
@@ -81,10 +88,37 @@ public class Registration : MonoBehaviour
 
   public bool PasswordRegularExpression(string password)
   {
-    Regex passwordRegex = new Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{5,}$");
-        Debug.Log(passwordRegex.IsMatch(password) +" match regex");
-
+    Debug.Log(passwordRegex.IsMatch(password) +" match regex");
     return passwordRegex.IsMatch(password);
   }
+
+
+   public string PasswordRequires(string password)
+   {
+      
+       StringBuilder sb = new StringBuilder("");
+
+       while (true)
+       {
+            if (!Regex.IsMatch(password, @"[a-z]"))
+           {
+               sb.Append("\r\n-Lowercase character");
+           }
+           if(!Regex.IsMatch(password, @"[A-Z]"))
+           {
+               sb.Append("\r\n-Uppercase letter.");
+           }
+           if(!Regex.IsMatch(password, @"\d"))
+           {
+              sb.Append("\r\n-Number.");
+           }
+           if(!Regex.IsMatch(password, @"[@#]"))
+           {
+              sb.Append("\r\n-Special character (@ or #).");
+           }
+            break;
+       }
+        return sb.ToString();
+    }
 
 }
