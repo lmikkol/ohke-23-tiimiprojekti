@@ -39,39 +39,36 @@ public class Registration : MonoBehaviour
   }
   public void RegisterUser()
   {
-    // UNCOMMENT LATER!!!!
-    //if(CheckMatchingPasswords(passwordField.text, passwordAgainField.text) && PasswordRegularExpression(passwordField.text))
-    if(CheckMatchingPasswords(passwordField.text, passwordAgainField.text))
-    {
-      
-      
-      
-      string passwordHash = HashingPassword(passwordField.text);
-      int id = userData.AddUser(nameField.text, passwordHash);
-      if(id>0)
-      {
-        Debug.Log("Hello " + nameField.text + " " + passwordHash + " " + passwordAgainField.text);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex -1);
-      }
-      else
-      {
-        errorMessenger.ShowNotification("User already exists.");
-        // errorMessenger.ShowNotification("käyttis käytössä");
-      }
-       
-       
+        // UNCOMMENT LATER!!!!
+        if (CheckMatchingPasswords(passwordField.text, passwordAgainField.text) && PasswordRegularExpression(passwordField.text))
+        {
+            string passwordHash = HashingPassword(passwordField.text);
+            int id = userData.AddUser(nameField.text, passwordHash);
+            if (id > 0)
+            {
+                Debug.Log("Hello " + nameField.text + " " + passwordHash + " " + passwordAgainField.text);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+            }
+            else
+            {
+                errorMessenger.ShowNotification("User already exists.");
+                // errorMessenger.ShowNotification("käyttis käytössä");
+            }
+        }
+        if (!CheckMatchingPasswords(passwordField.text, passwordAgainField.text))
+        {
+            errorMessenger.ShowNotification("Passwords don't match!");
+        }
+        if (!PasswordRegularExpression(passwordField.text))
+        {
+            errorMessenger.ShowNotification("Password doesn't meet regulations.");
+        }
+
     }
-    else
-    {
-      errorMessenger.ShowNotification("Passwords do not match / password doesn't meet regulations.");
-    }
-    
-    // 
-  }
 
   public bool CheckMatchingPasswords(string password, string passwordAgain)
   {
-    Debug.Log(password.Equals(passwordAgain) +" match");
+    Debug.Log(password.Equals(passwordAgain) + " match");
     return password.Equals(passwordAgain);
   }
 
