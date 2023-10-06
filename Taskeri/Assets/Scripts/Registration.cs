@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+
+
+
 public class Registration : MonoBehaviour
 {
 #region InputFields
