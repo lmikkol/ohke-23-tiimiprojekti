@@ -13,8 +13,9 @@ public class UserData : MonoBehaviour
     public TMP_Text userList;
 
     private string dbName = "URI=file:DataBummer.db";
-    
 
+    public Button loginButton;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -94,6 +95,32 @@ public class UserData : MonoBehaviour
         }
         DisplayUserData();
     }
+
+    public void LoginData(string userName)
+    {
+        Debug.Log("TIETOKANNASTA SALASANA");
+        using (var connection = new SqliteConnection(dbName))
+        {
+            connection.Open();
+
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = "SELECT password FROM User WHERE username = @username";
+                command.CommandType = CommandType.Text;
+                command.Parameters.AddWithValue("@username", userName);
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Debug.Log(reader["password"] + "TIETOKANNASTA SALASANA");
+                    }
+                }
+        
+            }
+            connection.Close();
+        }
+    }
+    
 
     // Update is called once per frame
     void Update()

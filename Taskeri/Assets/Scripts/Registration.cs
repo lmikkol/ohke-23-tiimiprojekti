@@ -13,6 +13,9 @@ public class Registration : MonoBehaviour
 {
 #region InputFields
   public TMP_InputField nameField;
+  public TMP_InputField loginNameField;
+
+  public TMP_InputField loginPasswordField;
   public TMP_InputField passwordField;
   public TMP_InputField passwordAgainField;
 #endregion
@@ -43,6 +46,24 @@ public class Registration : MonoBehaviour
         submitButton.interactable = true;
     }
   }
+
+  public void CheckingLogin(string input)
+  {
+    if(string.IsNullOrWhiteSpace(loginNameField.text) || string.IsNullOrWhiteSpace(loginPasswordField.text))
+    {
+        submitButton.interactable = false;
+    }
+    else
+    {
+        submitButton.interactable = true;
+    }
+  }
+
+  public void GoBackToPrevious()
+  {
+    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+  }
+
   public void RegisterUser()
   {
         // UNCOMMENT LATER!!!!
@@ -72,6 +93,11 @@ public class Registration : MonoBehaviour
         }
 
     }
+
+    public void LoginUser()
+    {
+      userData.LoginData(loginNameField.text);
+    }  
 
   public bool CheckMatchingPasswords(string password, string passwordAgain)
   {
