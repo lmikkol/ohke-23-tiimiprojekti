@@ -81,6 +81,7 @@ public class UserData : MonoBehaviour
                 //command.ExecuteNonQuery();
                 int id = Convert.ToInt32(command.ExecuteScalar());
                 Debug.Log(id);
+                MainManager.Instance.savedUserName = user;
                 return id;
               
                }
