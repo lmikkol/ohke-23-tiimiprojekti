@@ -74,7 +74,8 @@ public class Registration : MonoBehaviour
             if (id > 0)
             {
                 Debug.Log("Hello " + nameField.text + " " + passwordHash + " " + passwordAgainField.text);
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+                SceneManager.LoadScene("FrontPage");
+                //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
             }
             else
             {
