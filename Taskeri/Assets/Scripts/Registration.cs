@@ -79,7 +79,7 @@ public class Registration : MonoBehaviour
             }
             else
             {
-                errorMessenger.ShowNotification("User already exists.");
+                errorMessenger.ShowNotification(nameField.text + "already exists.");
                 // errorMessenger.ShowNotification("käyttis käytössä");
             }
         }
