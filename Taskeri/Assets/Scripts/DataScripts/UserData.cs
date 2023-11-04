@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 using System.Data;
 using Mono.Data.Sqlite;
@@ -34,7 +34,7 @@ public class UserData : MonoBehaviour
             using(var command = connection.CreateCommand())
             {
                 //Create a table for user credentials
-                command.CommandText = "CREATE TABLE IF NOT EXISTS User (id PRIMARY KEY, username TEXT NOT NULL UNIQUE, password TEXT NOT NULL)";
+                command.CommandText = "CREATE TABLE IF NOT EXISTS User (id INTEGER PRIMARY KEY, username TEXT NOT NULL UNIQUE, password TEXT NOT NULL)";
                 command.ExecuteNonQuery();
             }
 
@@ -66,62 +66,107 @@ public class UserData : MonoBehaviour
         }
     }
 
-    public int AddUser(string user, string hashPassword)
+    public void AddUser(string user, string hashPassword)
     {
-        using(var connection = new SqliteConnection(dbName))
-        {
-            connection.Open();
-            
-            using(var command = connection.CreateCommand())
-            {
-                
-               try
-               {
-                command.CommandText = "INSERT INTO User(username, password) VALUES ('" + user + "', '" + hashPassword + "'); SELECT last_insert_rowid()";
-                //command.ExecuteNonQuery();
-                int id = Convert.ToInt32(command.ExecuteScalar());
-                Debug.Log(id);
-                MainManager.Instance.savedUserName = user;
-                return id;
-              
-               }
-               catch (Exception e)
-               {
-                return -1;
-               }
-               
-                // if (se.ResultCode != SQLiteErrorCode.Constraint_Unique)
-            }
-            connection.Close();
-        }
-        DisplayUserData();
-    }
 
-    public void LoginData(string userName)
-    {
-        Debug.Log("TIETOKANNASTA SALASANA");
         using (var connection = new SqliteConnection(dbName))
         {
             connection.Open();
 
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = "SELECT password FROM User WHERE username = @username";
+
+                try
+                {
+                    command.CommandText = "INSERT INTO User(username, password) VALUES ('" + user + "', '" + hashPassword + "'); SELECT last_insert_rowid()";
+                    command.ExecuteNonQuery();
+                    //id = Convert.ToInt32(command.ExecuteScalar());
+                    //MainManager.Instance.savedUserName = user;
+
+
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e);
+                }
+            }
+            connection.Close();
+        }
+        DisplayUserData();
+    }
+
+    public User LoginData(string userName)
+    {
+
+        User loggedInUser = new User();
+
+        using (var connection = new SqliteConnection(dbName))
+        {
+            connection.Open();
+
+            using (var command = connection.CreateCommand())
+            {
+                //lis�tty kyselyyn kaikki
+                command.CommandText = "SELECT * FROM User WHERE username = @username";
                 command.CommandType = CommandType.Text;
                 command.Parameters.AddWithValue("@username", userName);
                 using (var reader = command.ExecuteReader())
                 {
-                    while (reader.Read())
+
+
+                    if (reader.HasRows)
                     {
-                        Debug.Log(reader["password"] + "TIETOKANNASTA SALASANA");
+                        while (reader.Read())
+                        {
+                            //User loggedUser = GetLoggedUser();
+                            Debug.Log(reader["username"] + " " + reader["password"] + " " + reader["id"] + " tietokannasta salasana");
+
+                            loggedInUser = new User(
+                            //!!!RATKAISE IDn OIKEA MUOTO
+                            Convert.ToInt32(reader["id"]) /*100*/,
+                            reader["username"].ToString(),
+                            reader["password"].ToString()
+
+                        );
+
+                            Debug.Log(loggedInUser.username);
+                            return loggedInUser;
+                        }
                     }
                 }
-        
+
             }
             connection.Close();
+
         }
+        return loggedInUser;
     }
-    
+
+    //public void LoginData(string userName)
+    //{
+    //    Debug.Log("TIETOKANNASTA SALASANA");
+    //    using (var connection = new SqliteConnection(dbName))
+    //    {
+    //        connection.Open();
+
+    //        using (var command = connection.CreateCommand())
+    //        {
+    //            command.CommandText = "SELECT password FROM User WHERE username = @username";
+    //            command.CommandType = CommandType.Text;
+    //            command.Parameters.AddWithValue("@username", userName);
+    //            using (var reader = command.ExecuteReader())
+    //            {
+    //                while (reader.Read())
+    //                {
+    //                    Debug.Log(reader["password"] + "TIETOKANNASTA SALASANA");
+    //                }
+    //            }
+
+    //        }
+    //        connection.Close();
+    //    }
+    //}
+
 
     // Update is called once per frame
     void Update()

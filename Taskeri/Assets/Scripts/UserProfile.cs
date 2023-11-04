@@ -12,7 +12,7 @@ public class UserProfile : MonoBehaviour
     string userNameText;
     public Button logOutbutton;
    
-    MainManager manager;
+    public MainManager manager;
 
     //possible info to show
 

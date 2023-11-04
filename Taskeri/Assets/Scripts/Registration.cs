@@ -23,9 +23,10 @@ public class Registration : MonoBehaviour
  #region Buttons
   public Button submitButton;
   public Button backButton;
-  #endregion
+    #endregion
 
-  ErrorNotificator errorMessenger;
+    private User loggedUser;
+    ErrorNotificator errorMessenger;
   UserData userData;
   Regex passwordRegex = new Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{5,}$");
     private void Awake()
@@ -64,23 +65,30 @@ public class Registration : MonoBehaviour
     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
   }
 
-  public void RegisterUser()
-  {
+
+    public void RegisterUser()
+    {
         // UNCOMMENT LATER!!!!
         if (CheckMatchingPasswords(passwordField.text, passwordAgainField.text) && PasswordRegularExpression(passwordField.text))
         {
+            string username = nameField.text;
             string passwordHash = HashingPassword(passwordField.text);
-            int id = userData.AddUser(nameField.text, passwordHash);
-            if (id > 0)
+            string password = passwordField.text;
+            User user = userData.LoginData(username);
+
+            //!!!!!PURKKA koodissa joka tullaan korjaamaan!!!!!!
+            Debug.Log(user.username.Length);
+            if (user.username.Length == 0)
             {
+                userData.AddUser(nameField.text, passwordHash);
                 Debug.Log("Hello " + nameField.text + " " + passwordHash + " " + passwordAgainField.text);
-                SceneManager.LoadScene("FrontPage");
-                //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+                //MainManager.Instance.savedUserName = user.username;
+                GoBackToPrevious();
+                //SceneManager.LoadScene("FrontPage");
             }
             else
             {
-                errorMessenger.ShowNotification(nameField.text + "already exists.");
-                // errorMessenger.ShowNotification("käyttis käytössä");
+                errorMessenger.ShowNotification("User already exists.");
             }
         }
         if (!CheckMatchingPasswords(passwordField.text, passwordAgainField.text))
@@ -94,13 +102,69 @@ public class Registration : MonoBehaviour
         }
 
     }
+  //  public void RegisterUser()
+  //{
+  //      // UNCOMMENT LATER!!!!
+  //      if (CheckMatchingPasswords(passwordField.text, passwordAgainField.text) && PasswordRegularExpression(passwordField.text))
+  //      {
+  //          string passwordHash = HashingPassword(passwordField.text);
+  //          int id = userData.AddUser(nameField.text, passwordHash);
+  //          if (id > 0)
+  //          {
+  //              Debug.Log("Hello " + nameField.text + " " + passwordHash + " " + passwordAgainField.text);
+  //              SceneManager.LoadScene("FrontPage");
+  //              //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+  //          }
+  //          else
+  //          {
+  //              errorMessenger.ShowNotification(nameField.text + "already exists.");
+  //              // errorMessenger.ShowNotification("käyttis käytössä");
+  //          }
+  //      }
+  //      if (!CheckMatchingPasswords(passwordField.text, passwordAgainField.text))
+  //      {
+  //          errorMessenger.ShowNotification("Passwords don't match!");
+  //      }
+  //      if (!PasswordRegularExpression(passwordField.text))
+  //      {
+  //          PasswordRequires(passwordField.text);
+  //          errorMessenger.ShowNotification("Password doesn't meet regulations. Missing the following: " + PasswordRequires(passwordField.text));
+  //      }
+
+  //  }
 
     public void LoginUser()
     {
-      userData.LoginData(loginNameField.text);
-    }  
 
-  public bool CheckMatchingPasswords(string password, string passwordAgain)
+        string user = loginNameField.text;
+        string password = loginPasswordField.text;
+
+        Debug.Log(loginNameField.text + " " + loginPasswordField.text);
+
+        loggedUser = userData.LoginData(user);
+        Debug.Log(loggedUser.id);
+
+        if (DeCryptPassword(password, loggedUser.password))
+        {
+            //PlayerManager pManager;
+            //pManager = gameObject.GetComponent<PlayerManager>();
+            //pManager.setUser(loggedUser);
+            MainManager.Instance.savedUserName = loggedUser.username;
+            MainManager.Instance.id = loggedUser.id;
+            SceneManager.LoadScene("FrontPage");
+        }
+        else
+        {
+            errorMessenger.ShowNotification("Password or username not matching ");
+        }
+
+    }
+
+    public bool DeCryptPassword(string opassword, string dpassword)
+    {
+        return BCrypt.Net.BCrypt.Verify(opassword, dpassword);
+    }
+    public bool CheckMatchingPasswords(string password, string passwordAgain)
   {
     Debug.Log(password.Equals(passwordAgain) + " match");
     return password.Equals(passwordAgain);
