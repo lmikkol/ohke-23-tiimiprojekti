@@ -18,7 +18,7 @@ public class TaskListView : MonoBehaviour
     public List<GameObject> taskList = new List<GameObject>();
 
     public TMP_Text TaskName;
-    public TMP_Text TaskTitle;
+    private TMP_Text TaskTitle;
     public GameObject taskPanel;
     public bool buttonClick;
     
@@ -30,6 +30,12 @@ public class TaskListView : MonoBehaviour
     {
         addTaskButton.onClick.AddListener(AddTask);
         removeTaskButton.onClick.AddListener(RemoveTask);
+        TaskTitle = task.GetComponentInChildren<TMP_Text>();
+
+        if(TaskTitle != null)
+        {
+            TaskTitle.text = "uusi teksti";
+        }
     }
 
     // Update is called once per frame
@@ -39,9 +45,11 @@ public class TaskListView : MonoBehaviour
     }
     public void AddTask()
     {
+        TaskTitle = task.GetComponentInChildren<TMP_Text>();
         int i = 0;
         Debug.Log("Pressed");
         GameObject newTask = Instantiate(task, new Vector2(spawnPos.transform.position.x, spawnPos.transform.position.y), transform.rotation) as GameObject;
+        TaskTitle.text = "uusi teksti";
         //TMP_Text name = Instantiate(TaskName, new Vector2(spawnPos.transform.position.x, spawnPos.transform.position.y), transform.rotation) as TMP_Text;
         newTask.transform.SetParent(this.transform, true);
         //name.transform.SetAsFirstSibling();
