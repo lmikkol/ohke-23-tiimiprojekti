@@ -12,6 +12,8 @@ public class MainManager : MonoBehaviour
 
     public string savedUserName;
 
+    public int id;
+
     private void Awake()
     {
         // start of new code

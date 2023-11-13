@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ListTask : MonoBehaviour
 {
@@ -10,18 +11,35 @@ public class ListTask : MonoBehaviour
 
     public GameObject container;
 
+    public GameObject taskForm;
+    
+
     public Button addTaskButton;
-
-    public TMP_Text taskTitle;
-
     public Button addNewTask;
     public Button closeForm;
+    public Button logOutButton;
 
-    public GameObject taskForm;
+
+    public TMP_Text taskTitle;
     public TMP_InputField title;
     public TMP_InputField description;
 
 
+    // Start is called before the first frame update
+    void Start()
+    {
+        addTaskButton.onClick.AddListener(OpenAddTask);
+        addNewTask.onClick.AddListener(AddTask);
+        closeForm.onClick.AddListener(CloseAddTask);
+        logOutButton.onClick.AddListener(LogOut);
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
 
     public void AddTask()
     {
@@ -44,17 +62,10 @@ public class ListTask : MonoBehaviour
         taskForm.SetActive(false);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void LogOut()
     {
-        addTaskButton.onClick.AddListener(OpenAddTask);
-        addNewTask.onClick.AddListener(AddTask);
-        closeForm.onClick.AddListener(CloseAddTask);
+        SceneManager.LoadScene("MainMenu");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }

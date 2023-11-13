@@ -31,7 +31,7 @@ public class UserProfile : MonoBehaviour
         if (manager != null)
         {
             userNameText = manager.savedUserName;
-            msg.text = "Welcome, " + userNameText + "!";
+            msg.text = "Welcome\n" + userNameText + "!";
         }
         else
         {
