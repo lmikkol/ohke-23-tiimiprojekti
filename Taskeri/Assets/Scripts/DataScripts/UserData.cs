@@ -21,7 +21,7 @@ public class UserData : MonoBehaviour
     {
         CreateDB();
 
-        DisplayUserData();
+    //    DisplayUserData();
     }
 
     public void CreateDB()
@@ -56,7 +56,7 @@ public class UserData : MonoBehaviour
             {
                 while(reader.Read())
                 
-                    userList.text += reader["username"] + "\t\t" + reader ["password"] + "\n";
+                    userList.text += reader["username"] + "\t\t" + reader["password"] + "\n";
 
                     reader.Close();
                 

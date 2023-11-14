@@ -82,9 +82,9 @@ public class Registration : MonoBehaviour
             {
                 userData.AddUser(nameField.text, passwordHash);
                 Debug.Log("Hello " + nameField.text + " " + passwordHash + " " + passwordAgainField.text);
-                //MainManager.Instance.savedUserName = user.username;
+                // MainManager.Instance.savedUserName = user.username;
                 GoBackToPrevious();
-                //SceneManager.LoadScene("FrontPage");
+                //SceneManager.LoadScene("MainPage");
             }
             else
             {
@@ -132,6 +132,8 @@ public class Registration : MonoBehaviour
   //      }
 
   //  }
+
+ 
 
     public void LoginUser()
     {
