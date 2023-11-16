@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -7,72 +5,75 @@ using TMPro;
 public class RemoveTask : MonoBehaviour
 {
 
-    public Button removeTask;
-
+    public Button removeTaskButton; //
+    public Button moreInfoButton; //
+    
     public TMP_Text title;
-    public Button descriptionButton;
-    public GameObject container;
-    public GameObject descriptionForm;
+    
+    public GameObject moreInfoContainer; //
+    public GameObject descriptionForm; //
+    GameObject newTask;
+    public Task task; //
+     
 
     // Start is called before the first frame update
     void Start()
     {
-        container = GameObject.Find("TestPosition");
-        descriptionButton.onClick.AddListener(DisplayDescription);
+        moreInfoContainer = GameObject.Find("TestPosition");
 
-        removeTask.onClick.AddListener(RemoveTaskClick);
+        moreInfoButton.onClick.AddListener(DisplayDescription);
+        removeTaskButton.onClick.AddListener(RemoveTaskOnClick);
     }
 
-    // Update is called once per frame
-    void Update()
+
+    // Set Task- data to an object
+    public void SetTaskObject(Task task)
     {
-        
+        this.task = task;
     }
 
-    public void RemoveTaskClick()
+
+    // Remove this task from the list
+    public void RemoveTaskOnClick()
     {
-        Debug.Log("Remove pressed");
-        KillChild();
+        DestroyChild(true);
         Destroy(gameObject);
     }
 
+    // Display more-info panel in screen
     public void DisplayDescription()
     {
 
-        KillChild();
+        DestroyChild(false);
 
-        // foreach(GameObject child in container.transform)
-        // {
-        //     Destroy(child);
-        // }
+        newTask = Instantiate(descriptionForm, moreInfoContainer.transform) as GameObject;
 
-        // GameObject old = GameObject.FindWithTag("Description");
-        // Destroy(old);
-
-        GameObject newTask = Instantiate(descriptionForm, container.transform) as GameObject;
-        //newTask.transform.SetParent(container.transform, false); 
-        //newTask.transform.localPosition = new Vector2(0, 0);
-
-        // GameObject newTask = Instantiate(descriptionForm, transform) as GameObject;
-       // newTask.transform.parent = container.transform;
-        // Debug.Log("Open Clicked!");
         Image taskTitlePh = newTask.transform.Find("TaskTitleForm").GetComponent<Image>();
+        Image taskDesc = newTask.transform.Find("DescriptionTxtForm").GetComponent<Image>();
+
+        TMP_Text taskDescription = taskDesc.transform.Find("TaskDescriptionTxt").GetComponent<TMP_Text>();
         TMP_Text headLiner = taskTitlePh.transform.Find("TaskTitleTxt").GetComponent<TMP_Text>();
-        //TMP_Text info = newTask.transform.Find("TaskDescriptionTxt").GetComponent<TMP_Text>();
-        headLiner.text = title.text;
-        //info.text = description.text;
 
-        // taskDescription = task.GetComponentInChildren<TMP_Text>();
-        // taskDescription.text = description.text;
+        headLiner.text = task.taskTitle;
+        taskDescription.text = task.taskDescription;
 
-        // GameObject newTask = (Instantiate(descriptionForm, transform) as GameObject).transform.parent = container.transform;
     }
 
-    public void KillChild()
+    // Destroy more-info panel from displaycontainer
+    public void DestroyChild(bool isClicked)
+
     {
-        for (int i = container.transform.childCount - 1; i >= 0; i--)
+        for (int i = moreInfoContainer.transform.childCount - 1; i >= 0; i--)
         {
-            Object.Destroy(container.transform.GetChild(i).gameObject);
+            if(isClicked)
+            {
+                Object.Destroy(newTask);
+            }
+            else
+            {
+                Object.Destroy(moreInfoContainer.transform.GetChild(i).gameObject);
+            }
+           
         }
     }
 }

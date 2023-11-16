@@ -15,23 +15,23 @@ public class UserData : MonoBehaviour
     private string dbName = "URI=file:DataBummer.db";
 
     public Button loginButton;
-    
+
     // Start is called before the first frame update
     void Start()
     {
         CreateDB();
 
-    //    DisplayUserData();
+        //    DisplayUserData();
     }
 
     public void CreateDB()
     {
         //Creating database connection
-        using(var connection = new SqliteConnection(dbName))
+        using (var connection = new SqliteConnection(dbName))
         {
             connection.Open();
 
-            using(var command = connection.CreateCommand())
+            using (var command = connection.CreateCommand())
             {
                 //Create a table for user credentials
                 command.CommandText = "CREATE TABLE IF NOT EXISTS User (id INTEGER PRIMARY KEY, username TEXT NOT NULL UNIQUE, password TEXT NOT NULL)";
@@ -44,24 +44,24 @@ public class UserData : MonoBehaviour
 
     public void DisplayUserData()
     {
-        using(var connection = new SqliteConnection(dbName))
+        using (var connection = new SqliteConnection(dbName))
         {
             connection.Open();
 
-        using(var command = connection.CreateCommand())
-        {
-            command.CommandText = "SELECT * FROM User";
-
-            using (IDataReader reader = command.ExecuteReader())
+            using (var command = connection.CreateCommand())
             {
-                while(reader.Read())
-                
-                    userList.text += reader["username"] + "\t\t" + reader["password"] + "\n";
+                command.CommandText = "SELECT * FROM User";
+
+                using (IDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+
+                        userList.text += reader["username"] + "\t\t" + reader["password"] + "\n";
 
                     reader.Close();
-                
+
+                }
             }
-        }
             connection.Close();
         }
     }
@@ -171,6 +171,6 @@ public class UserData : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

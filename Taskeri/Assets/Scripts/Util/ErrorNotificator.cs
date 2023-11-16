@@ -7,18 +7,7 @@ public class ErrorNotificator : MonoBehaviour
 {
     public TMP_Text errorMsg;
     public GameObject errorMessageBox;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void ShowNotification(string msg)
     {
@@ -28,10 +17,10 @@ public class ErrorNotificator : MonoBehaviour
 
     public IEnumerator CountDown()
     {
-       errorMsg.gameObject.SetActive(true);
-       errorMessageBox.gameObject.SetActive(true);
-       yield return new WaitForSeconds (5);
-       errorMsg.gameObject.SetActive(false);
-       errorMessageBox.gameObject.SetActive(false);
+        errorMsg.gameObject.SetActive(true);
+        errorMessageBox.gameObject.SetActive(true);
+        yield return new WaitForSeconds(5);
+        errorMsg.gameObject.SetActive(false);
+        errorMessageBox.gameObject.SetActive(false);
     }
 }
