@@ -3,6 +3,8 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using System;
+
 
 public class ListTask : MonoBehaviour
 {
@@ -40,11 +42,7 @@ public class ListTask : MonoBehaviour
 
     void Awake()
     {
-        loggedInUser = MainManager.Instance;
-        taskdao = GetComponent<TaskDao>();
 
-        List<List<string>> test = taskdao.SelectAllTaskByUserId(loggedInUser.id);
-        AddTaskToTheView(test);
 
 
         //loggedInUser = GetComponent<MainManager>();
@@ -52,13 +50,35 @@ public class ListTask : MonoBehaviour
     void Start()
     {
 
+        loggedInUser = MainManager.Instance;
+        taskdao = GetComponent<TaskDao>();
 
+        List<List<string>> test = taskdao.SelectAllTaskByUserId(loggedInUser.id);
+        AddTaskToTheView(test);
         addTaskButton.onClick.AddListener(OpenAddTask);
         addNewTask.onClick.AddListener(AddTask);
         closeForm.onClick.AddListener(CloseAddTask);
         logOutButton.onClick.AddListener(LogOut);
 
     }
+
+    public void RemoveTask(int taskId)
+    {
+
+        taskdao.RemoveFromDatabase(taskId);
+        List<List<string>> test = taskdao.SelectAllTaskByUserId(loggedInUser.id);
+        AddTaskToTheView(test);
+    }
+
+
+    public void UpdateTaskStatus(int done, int taskId)
+    {
+
+        taskdao.UpdateTaskDoneStatus(done, taskId);
+        List<List<string>> test = taskdao.SelectAllTaskByUserId(loggedInUser.id);
+        AddTaskToTheView(test);
+    }
+
 
 
 
@@ -83,14 +103,16 @@ public class ListTask : MonoBehaviour
             addedTask.transform.SetParent(container.transform, false);
 
             TMP_Text taskTitlePlaceHold = addedTask.transform.Find("TaskTitle").GetComponent<TMP_Text>();
-
+            Toggle doneToggle = addedTask.transform.Find("Toggle").GetComponent<Toggle>();
             Task newTask = Task.Instance;
 
-            Task.Instance.taskTitle = testi[i][0];
-            Task.Instance.taskDescription = testi[i][1];
+            Task.Instance.taskId = Convert.ToInt32(testi[i][0]);
+            Task.Instance.taskTitle = testi[i][1];
+            Task.Instance.taskDescription = testi[i][2];
+            Task.Instance.taskDone = Convert.ToInt32(testi[i][3]);
 
             taskTitlePlaceHold.text = newTask.taskTitle;
-
+            doneToggle.isOn = Convert.ToBoolean(Convert.ToInt32(testi[i][3]));
             //KATSO MYÖHEMMIN
             RemoveTask code = addedTask.transform.GetComponent<RemoveTask>();
 
@@ -105,7 +127,7 @@ public class ListTask : MonoBehaviour
         {
 
 
-            Object.Destroy(container.transform.GetChild(i).gameObject);
+            Destroy(container.transform.GetChild(i).gameObject);
 
 
         }

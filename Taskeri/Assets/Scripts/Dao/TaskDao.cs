@@ -87,6 +87,62 @@ public class TaskDao : MonoBehaviour
         }
     }
 
+    public void RemoveFromDatabase(int taskID)
+    {
+        Debug.Log("remove from database");
+        using (var connection = new SqliteConnection(dbName))
+        {
+            connection.Open();
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = "DELETE FROM Tasks WHERE task_id = @task_id";
+                command.Parameters.AddWithValue("@task_id", taskID);
+                try
+                {
+                    command.ExecuteNonQuery();
+                }
+                    catch(Exception e)
+                {
+                    throw new Exception(e.Message);
+                }
+                finally
+                {
+                    Debug.Log("This was removed from fb");
+                }
+            }
+            connection.Close();
+        }
+    }
+
+    public void UpdateTaskDoneStatus(int taskStatus, int taskId)
+    {
+        Debug.Log("update taskstatus from database");
+        using (var connection = new SqliteConnection(dbName))
+        {
+            connection.Open();
+            using (var command = connection.CreateCommand())
+            {
+                /// MUUTA TÄMÄ
+                command.CommandText = "UPDATE Tasks SET done = @done WHERE task_id = @task_id";
+                command.Parameters.AddWithValue("@done", taskStatus);
+                command.Parameters.AddWithValue("@task_id", taskId);
+                try
+                {
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(e.Message);
+                }
+                finally
+                {
+                    Debug.Log("This was updated from fb");
+                }
+            }
+            connection.Close();
+        }
+    }
+
 
 
     public List<List<string>> SelectAllTaskByUserId(int userId)
@@ -107,6 +163,7 @@ public class TaskDao : MonoBehaviour
                     {
                         List<string> ph = new()
                         {
+                            reader["task_id"].ToString(),
                             reader["title"].ToString(),
                             reader["description"].ToString(),
                             reader["done"].ToString()

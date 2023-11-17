@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class RemoveTask : MonoBehaviour
 {
@@ -14,15 +15,21 @@ public class RemoveTask : MonoBehaviour
     public GameObject descriptionForm; //
     GameObject newTask;
     public Task task; //
-     
+    public ListTask taskview;
+
+    public Toggle toggle;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        taskview = GameObject.FindObjectOfType<ListTask>();
         moreInfoContainer = GameObject.Find("TestPosition");
 
         moreInfoButton.onClick.AddListener(DisplayDescription);
         removeTaskButton.onClick.AddListener(RemoveTaskOnClick);
+
+        toggle.onValueChanged.AddListener(delegate { ToggleValue(); });
     }
 
 
@@ -32,12 +39,20 @@ public class RemoveTask : MonoBehaviour
         this.task = task;
     }
 
+    public void ToggleValue()
+    {
+        taskview.UpdateTaskStatus(Convert.ToInt32(toggle.isOn), task.taskId);
+        Debug.Log("Toggle values is : " + toggle.isOn);
+    }
 
     // Remove this task from the list
     public void RemoveTaskOnClick()
     {
+
+        Debug.Log(task.taskId + " TÄMÄ POISTETTIIN");
         DestroyChild(true);
-        Destroy(gameObject);
+       // Destroy(gameObject);
+        taskview.RemoveTask(task.taskId);
     }
 
     // Display more-info panel in screen
@@ -67,11 +82,11 @@ public class RemoveTask : MonoBehaviour
         {
             if(isClicked)
             {
-                Object.Destroy(newTask);
+                Destroy(newTask);
             }
             else
             {
-                Object.Destroy(moreInfoContainer.transform.GetChild(i).gameObject);
+                Destroy(moreInfoContainer.transform.GetChild(i).gameObject);
             }
            
         }

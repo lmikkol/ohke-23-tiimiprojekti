@@ -1066,10 +1066,11 @@ MonoBehaviour:
   removeTaskButton: {fileID: 5294361741732342264}
   moreInfoButton: {fileID: 5294361743174373159}
   title: {fileID: 5294361742696914312}
-  taskDescription: {fileID: 0}
   moreInfoContainer: {fileID: 0}
   descriptionForm: {fileID: 4760832586995550828, guid: 8192d5137cd484d43a563f03ec8506e2, type: 3}
   task: {fileID: 0}
+  taskview: {fileID: 0}
+  toggle: {fileID: 1572588429}
 --- !u!114 &7290080405567973918
 MonoBehaviour:
   m_ObjectHideFlags: 0
