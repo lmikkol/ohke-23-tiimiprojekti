@@ -16,13 +16,15 @@ public class RemoveTask : MonoBehaviour
     GameObject newTask;
     public Task task; //
     public ListTask taskview;
-
+    public Image donePanel;
     public Toggle toggle;
+    Image descPanel;
 
 
     // Start is called before the first frame update
     void Start()
     {
+       
         taskview = GameObject.FindObjectOfType<ListTask>();
         moreInfoContainer = GameObject.Find("TestPosition");
 
@@ -37,6 +39,7 @@ public class RemoveTask : MonoBehaviour
     public void SetTaskObject(Task task)
     {
         this.task = task;
+        donePanel.gameObject.SetActive(Convert.ToBoolean(task.taskDone));
     }
 
     public void ToggleValue()
@@ -69,10 +72,24 @@ public class RemoveTask : MonoBehaviour
         TMP_Text taskDescription = taskDesc.transform.Find("TaskDescriptionTxt").GetComponent<TMP_Text>();
         TMP_Text headLiner = taskTitlePh.transform.Find("TaskTitleTxt").GetComponent<TMP_Text>();
 
+        
+
         headLiner.text = task.taskTitle;
         taskDescription.text = task.taskDescription;
 
     }
+
+    //public void changeTaskPanelStatus(bool status)
+    //{
+    //    Image taskTitlePh = newTask.transform.Find("TaskTitleForm").GetComponent<Image>();
+    //    Image taskDesc = newTask.transform.Find("DescriptionTxtForm").GetComponent<Image>();
+
+    //    TMP_Text taskDescription = taskDesc.transform.Find("TaskDescriptionTxt").GetComponent<TMP_Text>();
+
+    //    if(taskDescription.text == task.taskDescription)
+    //    descPanel.gameObject.SetActive(status);
+
+    //}
 
     // Destroy more-info panel from displaycontainer
     public void DestroyChild(bool isClicked)

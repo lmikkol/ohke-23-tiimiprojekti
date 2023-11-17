@@ -17,8 +17,9 @@ public class ListTask : MonoBehaviour
 
     public GameObject taskForm;
 
-    #endregion    
-    
+    public GameObject donePanel;
+    #endregion
+
     #region Buttons
     public Button addTaskButton;
     public Button addNewTask;
@@ -104,6 +105,7 @@ public class ListTask : MonoBehaviour
 
             TMP_Text taskTitlePlaceHold = addedTask.transform.Find("TaskTitle").GetComponent<TMP_Text>();
             Toggle doneToggle = addedTask.transform.Find("Toggle").GetComponent<Toggle>();
+            GameObject donePanel = addedTask.transform.Find("MaskPanel").GetComponent<GameObject>();
             Task newTask = Task.Instance;
 
             Task.Instance.taskId = Convert.ToInt32(testi[i][0]);
@@ -113,6 +115,7 @@ public class ListTask : MonoBehaviour
 
             taskTitlePlaceHold.text = newTask.taskTitle;
             doneToggle.isOn = Convert.ToBoolean(Convert.ToInt32(testi[i][3]));
+           // donePanel.SetActive(Convert.ToBoolean(Convert.ToInt32(testi[i][3])));
             //KATSO MYÖHEMMIN
             RemoveTask code = addedTask.transform.GetComponent<RemoveTask>();
 
