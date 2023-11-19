@@ -766,6 +766,7 @@ GameObject:
   - component: {fileID: 344491807}
   - component: {fileID: 344491809}
   - component: {fileID: 344491808}
+  - component: {fileID: 344491810}
   m_Layer: 5
   m_Name: Prompt2
   m_TagString: Untagged
@@ -892,6 +893,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 344491806}
   m_CullTransparentMesh: 1
+--- !u!114 &344491810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344491806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a9601d3bf292da4c9939b6ace5c5231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameField: {fileID: 0}
+  loginNameField: {fileID: 0}
+  loginPasswordField: {fileID: 0}
+  passwordField: {fileID: 0}
+  passwordAgainField: {fileID: 0}
+  submitButton: {fileID: 0}
+  backButton: {fileID: 0}
+  Errortext: {fileID: 0}
 --- !u!1 &481636908
 GameObject:
   m_ObjectHideFlags: 0

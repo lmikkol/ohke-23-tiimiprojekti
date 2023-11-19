@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using System.Collections;
 using System;
 
 
@@ -39,6 +40,9 @@ public class ListTask : MonoBehaviour
 
     #endregion
     TaskDao taskdao;
+    public GameObject taskCreatedPanel;
+    public TMP_Text taskCreated;
+
     // Start is called before the first frame update
 
     void Awake()
@@ -90,6 +94,7 @@ public class ListTask : MonoBehaviour
         taskdao.AddTask(title.text, description.text, "12.3.2022", loggedInUser.id);
 
         List<List<string>> test = taskdao.SelectAllTaskByUserId(loggedInUser.id);
+        StartCoroutine(ShowTaskMessage());
         AddTaskToTheView(test);
     }
 
@@ -120,6 +125,7 @@ public class ListTask : MonoBehaviour
             RemoveTask code = addedTask.transform.GetComponent<RemoveTask>();
 
             code.SetTaskObject(newTask);
+            
         }
     }
 
@@ -134,6 +140,15 @@ public class ListTask : MonoBehaviour
 
 
         }
+    }
+
+    public IEnumerator ShowTaskMessage()
+    {
+        taskCreatedPanel.SetActive(true);
+        taskCreated.color = Color.green;
+        taskCreated.text = "Congratulations! \n New task \n was created succesfully!";
+        yield return new WaitForSeconds(3);
+        taskCreatedPanel.SetActive(false);
     }
 
     public void OpenAddTask()

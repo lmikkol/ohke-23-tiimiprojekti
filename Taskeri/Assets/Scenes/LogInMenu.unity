@@ -1786,6 +1786,7 @@ MonoBehaviour:
   passwordAgainField: {fileID: 0}
   submitButton: {fileID: 1710753298}
   backButton: {fileID: 9707777}
+  Errortext: {fileID: 0}
 --- !u!4 &1533760235
 Transform:
   m_ObjectHideFlags: 0
@@ -2027,7 +2028,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1710753299}
   m_OnClick:
     m_PersistentCalls:

@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -21,6 +22,7 @@ public class Registration : MonoBehaviour
     public Button backButton;
     #endregion
 
+    public GameObject Errortext;
     private User loggedUser;
     ErrorNotificator errorMessenger;
     UserData userData;
@@ -30,7 +32,6 @@ public class Registration : MonoBehaviour
     {
         userData = GetComponent<UserData>();
         errorMessenger = GetComponent<ErrorNotificator>();
-        submitButton.interactable = false;
     }
 
     public void Checking(string input)
@@ -62,10 +63,23 @@ public class Registration : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
+    public IEnumerator WaitForNextScene()
+    {
+        Errortext.SetActive(false);
+        yield return new WaitForSeconds(5);
+        GoBackToPrevious();
+        Errortext.SetActive(true);
+    }
+    
+
 
     public void RegisterUser()
     {
         // UNCOMMENT LATER!!!!
+        //submitButton = GetComponent<Button>();
+  
+        //    submitButton.interactable = false;
+
         if (CheckMatchingPasswords(passwordField.text, passwordAgainField.text) && PasswordRegularExpression(passwordField.text))
         {
             string username = nameField.text;
@@ -78,9 +92,11 @@ public class Registration : MonoBehaviour
             if (user.username.Length == 0)
             {
                 userData.AddUser(nameField.text, passwordHash);
+                errorMessenger.errorMsg.color = Color.green;
+                errorMessenger.ShowNotification("Congratulations, you've succesfully created an account!");
                 Debug.Log("Hello " + nameField.text + " " + passwordHash + " " + passwordAgainField.text);
+                StartCoroutine(WaitForNextScene());
                 // MainManager.Instance.savedUserName = user.username;
-                GoBackToPrevious();
                 //SceneManager.LoadScene("MainPage");
             }
             else
@@ -134,6 +150,9 @@ public class Registration : MonoBehaviour
 
     public void LoginUser()
     {
+        //submitButton = GetComponent<Button>();
+   
+        //    submitButton.interactable = false;
 
         string user = loginNameField.text;
         string password = loginPasswordField.text;
