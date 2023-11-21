@@ -60,7 +60,7 @@ public class Registration : MonoBehaviour
 
     public void GoBackToPrevious()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        SceneManager.LoadScene("MainMenu");
     }
 
     public IEnumerator WaitForNextScene()
@@ -75,10 +75,6 @@ public class Registration : MonoBehaviour
 
     public void RegisterUser()
     {
-        // UNCOMMENT LATER!!!!
-        //submitButton = GetComponent<Button>();
-  
-        //    submitButton.interactable = false;
 
         if (CheckMatchingPasswords(passwordField.text, passwordAgainField.text) && PasswordRegularExpression(passwordField.text))
         {
@@ -101,12 +97,12 @@ public class Registration : MonoBehaviour
             }
             else
             {
-                errorMessenger.ShowNotification("User already exists.");
+                errorMessenger.ShowNotification("User already exists, please try different username.");
             }
         }
         if (!CheckMatchingPasswords(passwordField.text, passwordAgainField.text))
         {
-            errorMessenger.ShowNotification("Passwords don't match!");
+            errorMessenger.ShowNotification("Passwords do not match!");
         }
         if (!PasswordRegularExpression(passwordField.text))
         {
@@ -115,44 +111,9 @@ public class Registration : MonoBehaviour
         }
 
     }
-    //  public void RegisterUser()
-    //{
-    //      // UNCOMMENT LATER!!!!
-    //      if (CheckMatchingPasswords(passwordField.text, passwordAgainField.text) && PasswordRegularExpression(passwordField.text))
-    //      {
-    //          string passwordHash = HashingPassword(passwordField.text);
-    //          int id = userData.AddUser(nameField.text, passwordHash);
-    //          if (id > 0)
-    //          {
-    //              Debug.Log("Hello " + nameField.text + " " + passwordHash + " " + passwordAgainField.text);
-    //              SceneManager.LoadScene("FrontPage");
-    //              //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
-    //          }
-    //          else
-    //          {
-    //              errorMessenger.ShowNotification(nameField.text + "already exists.");
-    //              // errorMessenger.ShowNotification("käyttis käytössä");
-    //          }
-    //      }
-    //      if (!CheckMatchingPasswords(passwordField.text, passwordAgainField.text))
-    //      {
-    //          errorMessenger.ShowNotification("Passwords don't match!");
-    //      }
-    //      if (!PasswordRegularExpression(passwordField.text))
-    //      {
-    //          PasswordRequires(passwordField.text);
-    //          errorMessenger.ShowNotification("Password doesn't meet regulations. Missing the following: " + PasswordRequires(passwordField.text));
-    //      }
-
-    //  }
-
-
-
+   
     public void LoginUser()
     {
-        //submitButton = GetComponent<Button>();
-   
-        //    submitButton.interactable = false;
 
         string user = loginNameField.text;
         string password = loginPasswordField.text;
@@ -161,20 +122,29 @@ public class Registration : MonoBehaviour
 
         loggedUser = userData.LoginData(user);
         Debug.Log(loggedUser.id);
-
-        if (DeCryptPassword(password, loggedUser.password))
+        if(loggedUser.id != 0)
         {
+            Debug.Log("L�yTYi");
+            if (DeCryptPassword(password, loggedUser.password))
+            {
             //PlayerManager pManager;
             //pManager = gameObject.GetComponent<PlayerManager>();
             //pManager.setUser(loggedUser);
             MainManager.Instance.savedUserName = loggedUser.username;
             MainManager.Instance.id = loggedUser.id;
             SceneManager.LoadScene("MainPage");
+            }
+            else
+            {
+                errorMessenger.ShowNotification("Password or username not matching ");
+            }
+
         }
         else
         {
             errorMessenger.ShowNotification("Password or username not matching ");
         }
+
 
     }
 
@@ -218,9 +188,9 @@ public class Registration : MonoBehaviour
             {
                 sb.Append("\r\n-Number.");
             }
-            if (!Regex.IsMatch(password, @"[@#]"))
+            if (!Regex.IsMatch(password, @"[@#!]"))
             {
-                sb.Append("\r\n-Special character (@ or #).");
+                sb.Append("\r\n-Special character (@ or # or !).");
             }
             break;
         }

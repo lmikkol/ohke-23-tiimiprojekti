@@ -20,6 +20,8 @@ public class RemoveTask : MonoBehaviour
     public Toggle toggle;
     Image descPanel;
 
+    //string dateTimeValue = DateTime.Now.ToString("dd:MM:yyyy");
+
 
     // Start is called before the first frame update
     void Start()
@@ -72,10 +74,17 @@ public class RemoveTask : MonoBehaviour
         TMP_Text taskDescription = taskDesc.transform.Find("TaskDescriptionTxt").GetComponent<TMP_Text>();
         TMP_Text headLiner = taskTitlePh.transform.Find("TaskTitleTxt").GetComponent<TMP_Text>();
 
-        
+        TMP_Text taskDate = newTask.transform.Find("Date").GetComponent<TMP_Text>();
+
+
+        //taskDate.text = dateTimeValue.ToString();
+
+        DateTime placehodlerDate = DateTime.Parse(task.dateTime);
+        string parsedDate = placehodlerDate.ToString("dd:MM:yyyy");
 
         headLiner.text = task.taskTitle;
         taskDescription.text = task.taskDescription;
+        taskDate.text = "Date: " + parsedDate;
 
     }
 

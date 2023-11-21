@@ -59,9 +59,10 @@ public class TaskDao : MonoBehaviour
     }
 
     //Adds new task to the Task- table
-    public void AddTask(string taskTitle, string taskDescription, string taskDate, int userId)
+    public void AddTask(string taskTitle, string taskDescription, int userId)
     {
-        Debug.Log("create task");
+
+        Debug.Log("create task" + DateTime.Now.ToString());
         using (var connection = new SqliteConnection(dbName))
         {
             connection.Open();
@@ -71,7 +72,7 @@ public class TaskDao : MonoBehaviour
                 command.CommandText = "INSERT INTO Tasks(title, description, created_at, done, user_id) VALUES(@taskTitle, @taskDescription, @taskDate, @done, @user_id)";
                 command.Parameters.AddWithValue("@taskTitle", taskTitle);
                 command.Parameters.AddWithValue("@taskDescription", taskDescription);
-                command.Parameters.AddWithValue("@taskDate", taskDate);
+                command.Parameters.AddWithValue("@taskDate", DateTime.Now.ToString());
                 command.Parameters.AddWithValue("@done", 0);
                 command.Parameters.AddWithValue("@user_id", userId);
                 try
@@ -153,7 +154,7 @@ public class TaskDao : MonoBehaviour
             connection.Open();
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = "SELECT * FROM Tasks WHERE user_id = @user_id ORDER BY done ";
+                command.CommandText = "SELECT * FROM Tasks WHERE user_id = @user_id ORDER BY done ASC, created_at DESC ";
                 command.Parameters.AddWithValue("@user_id", userId);
 
                 using (IDataReader reader = command.ExecuteReader())
@@ -166,7 +167,8 @@ public class TaskDao : MonoBehaviour
                             reader["task_id"].ToString(),
                             reader["title"].ToString(),
                             reader["description"].ToString(),
-                            reader["done"].ToString()
+                            reader["done"].ToString(),
+                            reader["created_at"].ToString()
                         };
                         tasks.Add(ph);
                     }

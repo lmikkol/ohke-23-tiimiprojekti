@@ -42,6 +42,7 @@ public class ListTask : MonoBehaviour
     TaskDao taskdao;
     public GameObject taskCreatedPanel;
     public TMP_Text taskCreated;
+    public TMP_Text taskDate;
 
     // Start is called before the first frame update
 
@@ -91,7 +92,7 @@ public class ListTask : MonoBehaviour
     {
 
 
-        taskdao.AddTask(title.text, description.text, "12.3.2022", loggedInUser.id);
+        taskdao.AddTask(title.text, description.text, loggedInUser.id);
 
         List<List<string>> test = taskdao.SelectAllTaskByUserId(loggedInUser.id);
         StartCoroutine(ShowTaskMessage());
@@ -111,12 +112,14 @@ public class ListTask : MonoBehaviour
             TMP_Text taskTitlePlaceHold = addedTask.transform.Find("TaskTitle").GetComponent<TMP_Text>();
             Toggle doneToggle = addedTask.transform.Find("Toggle").GetComponent<Toggle>();
             GameObject donePanel = addedTask.transform.Find("MaskPanel").GetComponent<GameObject>();
+            //TMP_Text createdDate = addedTask.transform.Find("Date").GetComponent<TMP_Text>();
             Task newTask = Task.Instance;
 
             Task.Instance.taskId = Convert.ToInt32(testi[i][0]);
             Task.Instance.taskTitle = testi[i][1];
             Task.Instance.taskDescription = testi[i][2];
             Task.Instance.taskDone = Convert.ToInt32(testi[i][3]);
+            Task.Instance.dateTime = testi[i][4];
 
             taskTitlePlaceHold.text = newTask.taskTitle;
             doneToggle.isOn = Convert.ToBoolean(Convert.ToInt32(testi[i][3]));
