@@ -55,7 +55,7 @@ public class RemoveTask : MonoBehaviour
     {
 
         Debug.Log(task.taskId + " TÄMÄ POISTETTIIN");
-        DestroyChild(true);
+        DestroyChild(true, task.taskId);
        // Destroy(gameObject);
         taskview.RemoveTask(task.taskId);
     }
@@ -64,7 +64,7 @@ public class RemoveTask : MonoBehaviour
     public void DisplayDescription()
     {
 
-        DestroyChild(false);
+        DestroyChild(false, -1);
 
         newTask = Instantiate(descriptionForm, moreInfoContainer.transform) as GameObject;
 
@@ -72,6 +72,9 @@ public class RemoveTask : MonoBehaviour
         Image taskDesc = newTask.transform.Find("DescriptionTxtForm").GetComponent<Image>();
 
         TMP_Text taskDescription = taskDesc.transform.Find("TaskDescriptionTxt").GetComponent<TMP_Text>();
+
+        TMP_Text invisibleId = taskDesc.transform.Find("InvisibleTaskId").GetComponent<TMP_Text>();
+
         TMP_Text headLiner = taskTitlePh.transform.Find("TaskTitleTxt").GetComponent<TMP_Text>();
 
         TMP_Text taskDate = newTask.transform.Find("Date").GetComponent<TMP_Text>();
@@ -81,38 +84,37 @@ public class RemoveTask : MonoBehaviour
 
         DateTime placehodlerDate = DateTime.Parse(task.dateTime);
         string parsedDate = placehodlerDate.ToString("dd:MM:yyyy");
-
+        invisibleId.text = task.taskId.ToString();
         headLiner.text = task.taskTitle;
         taskDescription.text = task.taskDescription;
         taskDate.text = "Date: " + parsedDate;
 
     }
 
-    //public void changeTaskPanelStatus(bool status)
-    //{
-    //    Image taskTitlePh = newTask.transform.Find("TaskTitleForm").GetComponent<Image>();
-    //    Image taskDesc = newTask.transform.Find("DescriptionTxtForm").GetComponent<Image>();
-
-    //    TMP_Text taskDescription = taskDesc.transform.Find("TaskDescriptionTxt").GetComponent<TMP_Text>();
-
-    //    if(taskDescription.text == task.taskDescription)
-    //    descPanel.gameObject.SetActive(status);
-
-    //}
+ 
 
     // Destroy more-info panel from displaycontainer
-    public void DestroyChild(bool isClicked)
+    //It destroy all visible when open new task description
+    public void DestroyChild(bool isClicked, int removableTaskId)
 
     {
         for (int i = moreInfoContainer.transform.childCount - 1; i >= 0; i--)
         {
             if(isClicked)
             {
-                Destroy(newTask);
+              
+                Image poistettavaTaski = moreInfoContainer.transform.GetChild(i).Find("DescriptionTxtForm").GetComponent<Image>();
+                TMP_Text poistettavanIdTaskissa = poistettavaTaski.transform.Find("InvisibleTaskId").GetComponent<TMP_Text>();
+              
+                if(removableTaskId.ToString() == poistettavanIdTaskissa.text)
+                {
+                    Destroy(moreInfoContainer.transform.GetChild(i).gameObject);
+                }
             }
             else
             {
                 Destroy(moreInfoContainer.transform.GetChild(i).gameObject);
+     
             }
            
         }

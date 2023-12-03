@@ -29,13 +29,13 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu");
 
-        //if(scene.name == "LoginMenu")
+        //if (scene.name == "LoginMenu")
         //{
-        //    SceneManager.LoadScene("MaimMenu");
+        //    SceneManager.LoadScene("MainMenu");
         //}
         //else
         //{
-        //    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex -1);
+        //    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
         //}
     }
 

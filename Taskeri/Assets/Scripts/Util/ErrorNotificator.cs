@@ -10,17 +10,17 @@ public class ErrorNotificator : MonoBehaviour
     public GameObject errorMessageBox;
 
 
-    public void ShowNotification(string msg)
+    public void ShowNotification(string msg, int time)
     {
         errorMsg.text = msg;
-        StartCoroutine(CountDown());
+        StartCoroutine(CountDown(time));
     }
 
-    public IEnumerator CountDown()
+    public IEnumerator CountDown(int time)
     {
         errorMsg.gameObject.SetActive(true);
         errorMessageBox.gameObject.SetActive(true);
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(time);
         errorMsg.gameObject.SetActive(false);
         errorMessageBox.gameObject.SetActive(false);
     }

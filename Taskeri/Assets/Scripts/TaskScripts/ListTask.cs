@@ -39,18 +39,20 @@ public class ListTask : MonoBehaviour
     MainManager loggedInUser;
 
     #endregion
+
     TaskDao taskdao;
     public GameObject taskCreatedPanel;
     public TMP_Text taskCreated;
     public TMP_Text taskDate;
 
+    public TMP_InputField titleInput;
+    public TMP_InputField descInput;
+    ErrorNotificator errorMessenger;
+
     // Start is called before the first frame update
 
     void Awake()
     {
-
-
-
         //loggedInUser = GetComponent<MainManager>();
     }
     void Start()
@@ -58,6 +60,7 @@ public class ListTask : MonoBehaviour
 
         loggedInUser = MainManager.Instance;
         taskdao = GetComponent<TaskDao>();
+        errorMessenger = GetComponent<ErrorNotificator>();
 
         List<List<string>> test = taskdao.SelectAllTaskByUserId(loggedInUser.id);
         AddTaskToTheView(test);
@@ -85,18 +88,26 @@ public class ListTask : MonoBehaviour
         AddTaskToTheView(test);
     }
 
-
-
-
     public void AddTask()
     {
 
+        if (string.IsNullOrWhiteSpace(titleInput.text) || string.IsNullOrWhiteSpace(descInput.text))
+        {
+            errorMessenger.errorMsg.color = Color.red;
+            errorMessenger.ShowNotification("You need to add title and description to add a new task!", 5);
+        }
+        else
+        {
+            taskdao.AddTask(title.text, description.text, loggedInUser.id);
 
-        taskdao.AddTask(title.text, description.text, loggedInUser.id);
+            List<List<string>> test = taskdao.SelectAllTaskByUserId(loggedInUser.id);
+            StartCoroutine(ShowTaskMessage());
+            AddTaskToTheView(test);
+            title.text = "";
+            description.text = "";
+        }
 
-        List<List<string>> test = taskdao.SelectAllTaskByUserId(loggedInUser.id);
-        StartCoroutine(ShowTaskMessage());
-        AddTaskToTheView(test);
+        
     }
 
     public void AddTaskToTheView(List<List<string>> testi)

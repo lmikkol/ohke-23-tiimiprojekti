@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.Text;
-
 public class Registration : MonoBehaviour
 {
     #region InputFields
@@ -89,7 +88,7 @@ public class Registration : MonoBehaviour
             {
                 userData.AddUser(nameField.text, passwordHash);
                 errorMessenger.errorMsg.color = Color.green;
-                errorMessenger.ShowNotification("Congratulations, you've succesfully created an account!");
+                errorMessenger.ShowNotification("Congratulations, you've succesfully created an account!", 5);
                 Debug.Log("Hello " + nameField.text + " " + passwordHash + " " + passwordAgainField.text);
                 StartCoroutine(WaitForNextScene());
                 // MainManager.Instance.savedUserName = user.username;
@@ -97,17 +96,20 @@ public class Registration : MonoBehaviour
             }
             else
             {
-                errorMessenger.ShowNotification("User already exists, please try different username.");
+                errorMessenger.errorMsg.color = Color.red;
+                errorMessenger.ShowNotification("User already exists, please try different username.", 5);
             }
         }
         if (!CheckMatchingPasswords(passwordField.text, passwordAgainField.text))
         {
-            errorMessenger.ShowNotification("Passwords do not match!");
+            errorMessenger.errorMsg.color = Color.red;
+            errorMessenger.ShowNotification("Passwords do not match!", 5);
         }
         if (!PasswordRegularExpression(passwordField.text))
         {
+            errorMessenger.errorMsg.color = Color.red;
             PasswordRequires(passwordField.text);
-            errorMessenger.ShowNotification("Password doesn't meet regulations. Missing the following: " + PasswordRequires(passwordField.text));
+            errorMessenger.ShowNotification("Password doesn't meet regulations. Missing the following: " + PasswordRequires(passwordField.text), 8);
         }
 
     }
@@ -136,13 +138,13 @@ public class Registration : MonoBehaviour
             }
             else
             {
-                errorMessenger.ShowNotification("Password or username not matching ");
+                errorMessenger.ShowNotification("Password or username not matching ", 5);
             }
 
         }
         else
         {
-            errorMessenger.ShowNotification("Password or username not matching ");
+            errorMessenger.ShowNotification("Password or username not matching ", 5);
         }
 
 
