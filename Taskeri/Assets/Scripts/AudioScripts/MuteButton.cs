@@ -18,9 +18,9 @@ public class MuteButton : MonoBehaviour
     // This method is called when the mute button is clicked
     public void OnMuteButtonClick()
     {
-        if (audioManager != null)
-        {
-            audioManager.ToggleMute();
-        }
+//        if (audioManager != null)
+//        {
+//            audioManager.ToggleMute();
+//        }
     }
 }
