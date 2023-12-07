@@ -13,10 +13,10 @@ public class AudioManager : MonoBehaviour {
     void Start() {
         audioSource.Play();
     }
-    public void ToggleMute()
-    {
-        audioSource.mute = !audioSource.mute;
-    }
+//        public void ToggleMute()
+//    {
+//        audioSource.mute = !audioSource.mute;
+//    }
 
 
 }
