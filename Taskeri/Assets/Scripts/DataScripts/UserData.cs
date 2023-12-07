@@ -44,102 +44,12 @@ public class UserData : MonoBehaviour
 
     public void DisplayUserData()
     {
-<<<<<<< HEAD
-        using(var connection = new SqliteConnection(dbName))
-        {
-            connection.Open();
-
-        using(var command = connection.CreateCommand())
-        {
-            command.CommandText = "SELECT * FROM User";
-
-            using (IDataReader reader = command.ExecuteReader())
-            {
-                while(reader.Read())
-                
-                    userList.text += reader["username"] + "\t\t" + reader ["password"] + "\n";
-
-                    reader.Close();
-                
-            }
-        }
-            connection.Close();
-        }
-    }
-
-    public void AddUser(string user, string hashPassword)
-    {
-
-=======
->>>>>>> logOutUser
         using (var connection = new SqliteConnection(dbName))
         {
             connection.Open();
 
             using (var command = connection.CreateCommand())
             {
-<<<<<<< HEAD
-
-                try
-                {
-                    command.CommandText = "INSERT INTO User(username, password) VALUES ('" + user + "', '" + hashPassword + "'); SELECT last_insert_rowid()";
-                    command.ExecuteNonQuery();
-                    //id = Convert.ToInt32(command.ExecuteScalar());
-                    //MainManager.Instance.savedUserName = user;
-
-
-                }
-                catch (Exception e)
-                {
-                    Debug.Log(e);
-                }
-            }
-            connection.Close();
-        }
-        DisplayUserData();
-    }
-
-    public User LoginData(string userName)
-    {
-
-        User loggedInUser = new User();
-
-        using (var connection = new SqliteConnection(dbName))
-        {
-            connection.Open();
-
-            using (var command = connection.CreateCommand())
-            {
-                //lis�tty kyselyyn kaikki
-                command.CommandText = "SELECT * FROM User WHERE username = @username";
-                command.CommandType = CommandType.Text;
-                command.Parameters.AddWithValue("@username", userName);
-                using (var reader = command.ExecuteReader())
-                {
-
-
-                    if (reader.HasRows)
-                    {
-                        while (reader.Read())
-                        {
-                            //User loggedUser = GetLoggedUser();
-                            Debug.Log(reader["username"] + " " + reader["password"] + " " + reader["id"] + " tietokannasta salasana");
-
-                            loggedInUser = new User(
-                            //!!!RATKAISE IDn OIKEA MUOTO
-                            Convert.ToInt32(reader["id"]) /*100*/,
-                            reader["username"].ToString(),
-                            reader["password"].ToString()
-
-                        );
-
-                            Debug.Log(loggedInUser.username);
-                            return loggedInUser;
-                        }
-                    }
-                }
-
-=======
                 command.CommandText = "SELECT * FROM User";
 
                 using (IDataReader reader = command.ExecuteReader())
@@ -151,16 +61,11 @@ public class UserData : MonoBehaviour
                     reader.Close();
 
                 }
->>>>>>> logOutUser
             }
             connection.Close();
-
         }
-        return loggedInUser;
     }
 
-<<<<<<< HEAD
-=======
     public void AddUser(string user, string hashPassword)
     {
 
@@ -237,7 +142,6 @@ public class UserData : MonoBehaviour
         return loggedInUser;
     }
 
->>>>>>> logOutUser
     //public void LoginData(string userName)
     //{
     //    Debug.Log("TIETOKANNASTA SALASANA");
