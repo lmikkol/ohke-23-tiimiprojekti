@@ -15,7 +15,7 @@ TaskManager-sovellus on tehty osana Sasky koulutuskuntayhtymän "Ohjelmistokehit
  ## Dokumentaatio
 
  - [HowToUse](https://github.com/lmikkol/ohke-23-tiimiprojekti/blob/main/Dokumentaatio/HowToUse.md)
- - [Vaatimusmäärittely](https://github.com/lmikkol/ohke-23-tiimiprojekti/blob/main/Dokumentaatio/ApplicationUsage.md)
+ - [ApplicationUsage](https://github.com/lmikkol/ohke-23-tiimiprojekti/blob/main/Dokumentaatio/ApplicationUsage.md)
 
 ## Roles: 
   Scrum master: Mikko
