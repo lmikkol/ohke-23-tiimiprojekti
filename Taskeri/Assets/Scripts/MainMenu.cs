@@ -7,8 +7,14 @@ using TMPro;
 
 public class MainMenu : MonoBehaviour
 {
+    private Scene scene;
 
-    
+    private void Start()
+    {
+        scene = SceneManager.GetActiveScene();
+        Debug.Log(scene.name);
+    }
+
     public void GoToRegister()
     {
         SceneManager.LoadScene(1);
@@ -21,6 +27,20 @@ public class MainMenu : MonoBehaviour
 
     public void GoBack()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex -1);
+        SceneManager.LoadScene("MainMenu");
+
+        //if (scene.name == "LoginMenu")
+        //{
+        //    SceneManager.LoadScene("MainMenu");
+        //}
+        //else
+        //{
+        //    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        //}
+    }
+
+    public void ExitApp()
+    {
+        Application.Quit();
     }
 }

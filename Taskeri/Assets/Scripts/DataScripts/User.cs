@@ -59,4 +59,8 @@ public class User : MonoBehaviour
     //    return this.password;
     //}
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> logOutUser
