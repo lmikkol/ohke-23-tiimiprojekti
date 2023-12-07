@@ -12,21 +12,22 @@ Sovellukseen voi luoda useampia käyttäjiä ja näin ollen myös luodut tehtäv
 TaskManager-sovellus on tehty osana Sasky koulutuskuntayhtymän "Ohjelmistokehittäjänä toimiminen, Syksy 2023" suoritusta
  ryhmänä.
 
-## Roolit: 
+ ## Dokumentaatio
+
+ - [HowToUse](https://github.com/lmikkol/ohke-23-tiimiprojekti/blob/main/Dokumentaatio/HowToUse.md)
+ - [Vaatimusmäärittely](https://github.com/lmikkol/ohke-23-tiimiprojekti/blob/main/Dokumentaatio/ApplicationUsage.md)
+
+## Roles: 
   Scrum master: Mikko
-  
   Product owner: Jani, Kasper
-  
   Developers: Mikko, Kasper, Valentin, Jani
 
-## Työkalut:
-  Discord, Unity, Razor pages, VSC, ei ole päätetty kaikkea.
+## Tools used on developement:
+  Discord, Unity, Visual Studio Code, Visual Studio 2019, SharePoint and OneDrive.
 
-## Kommunikaatiokanavat:
-  Discord, Teams, sähköposti
+## Communication:
+  The team communicated mainly via Discord. Teams was used occassionally during the developement as well as email.
 
-## Ajankäyttö:
-  Tarpeen mukaan, sillain että tulee valmista. (Sovitaan viikoittaisissa palavereissa)
+## Developement:
+  Developement was agreed on weekly meetings, which team followed the SCRUM- methods, determing tasks for each team member for the week.
 
-###### GitProfiilit: 
-  Kasper: ```https://github.com/Kasparist´´´
