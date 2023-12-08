@@ -47,3 +47,10 @@ The user is adviced to start creating tasks on the main view.
 - User can set task as done, the toggle is located on the left side of task form, arranging the tasks so that the done task will be on the bottom
 - User can also remove tasks, clicking the red cross on the task forms upper right corner
 - When user wants to exit the application, they must log out, leading them to the main menu to let them press the big red "QUIT", closing the application
+
+### Further Development
+
+- Remote database
+- User could follow their progress
+- User could gain experience when tasks been done, some kind of leveling system
+- Mobile version
