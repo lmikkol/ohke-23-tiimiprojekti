@@ -1,5 +1,6 @@
 # ohke-23-tiimiprojekti
 
+### About the project
 TaskManager on henkilökohtainen elämänhallintaa varten luotu sovellus.
  Sovelluksen tarkoituksena on mahdollistaa yksilölle henkilökohtaiseen elämään liittyvien tehtävien listaaminen ja seuraaminen.
 Listaaminen auttaa tehtävien muistamiseen ja näin myös tehtävien toteuttamisen todennäköisyys kasvaa, tehtävien ollessa seurattavana kirjoitettuina ylös.
@@ -12,14 +13,16 @@ Sovellukseen voi luoda useampia käyttäjiä ja näin ollen myös luodut tehtäv
 TaskManager-sovellus on tehty osana Sasky koulutuskuntayhtymän "Ohjelmistokehittäjänä toimiminen, Syksy 2023" suoritusta
  ryhmänä.
 
- ## Dokumentaatio
+ ## Documentation
 
  - [HowToUse](https://github.com/lmikkol/ohke-23-tiimiprojekti/blob/main/Dokumentaatio/HowToUse.md)
  - [ApplicationUsage](https://github.com/lmikkol/ohke-23-tiimiprojekti/blob/main/Dokumentaatio/ApplicationUsage.md)
 
 ## Roles: 
   Scrum master: Mikko
-  Product owner: Jani, Kasper
+  
+  Product owner: Kasper, Jani
+  
   Developers: Mikko, Kasper, Valentin, Jani
 
 ## Tools used on developement:
